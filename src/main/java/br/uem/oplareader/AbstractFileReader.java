@@ -17,6 +17,7 @@ import jmetal4.qualityIndicator.util.MetricsUtil;
 
 public class AbstractFileReader {
 
+	private static final String TAB = "\t";
 	private static final Logger LOG = Logger.getLogger(AbstractFileReader.class);
 	private static final Pattern PATTERN_EXECUTION_TIME = Pattern.compile("Exec ([0-9]+) => ([0-9]+)ms", Pattern.DOTALL);
 	protected List<String> metricName = Arrays.asList("COE", "ACLASS", "DC");
@@ -42,7 +43,7 @@ public class AbstractFileReader {
 		List<String> readAllLines = readAllLines(fitnessFile);
 		experimentResult = new ExperimentData(getQtdSolucoes(readAllLines), getQtdFuncoesObjetivo(readAllLines.get(0)));
 		readAllLines.forEach(linha ->{
-			List<String> valores = Arrays.asList(linha.split(StringUtils.SPACE));
+			List<String> valores = Arrays.asList(linha.split(TAB));
 			valores.removeIf(StringUtils::isBlank);
 			experimentResult.add(metricName, valores);
 		});
