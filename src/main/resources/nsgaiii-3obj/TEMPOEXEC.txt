@@ -1,4 +1,3 @@
-TEMPO DE EXECUÇÃO DE CADA RUN
 Exec 0 => 38895134ms
 Exec 1 => 41887659ms
 Exec 2 => 42693717ms

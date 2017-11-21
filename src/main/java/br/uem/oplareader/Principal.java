@@ -3,8 +3,11 @@ package br.uem.oplareader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import br.uem.oplareader.model.ExperimentData;
 
 public class Principal {
 
@@ -15,10 +18,13 @@ public class Principal {
 	
 	public static void main(String[] args) throws IOException {
 		CalculoFitness calculoFitness = new CalculoFitness();
-		Double valorCalculado = calculoFitness.calcular(OUTPUT_FOLDER);
-		LOG.info("Hypervolume: " + valorCalculado);
-		
-		ChartGenerator chartGenerator = new ChartGenerator();
-		chartGenerator.generate(OUTPUT_FOLDER);
+		Map<String, ExperimentData> listData = calculoFitness.calcular(OUTPUT_FOLDER);
+		listData.forEach((key, value) -> {
+			ExperimentData data = listData.get(key);
+			LOG.info("File: " + key + ", Hypervolume: " + data.getHypervolume() + ", Execution Time: " + data.getTemposExecucaoEmHoras());
+		}); 
+//		
+//		ChartGenerator chartGenerator = new ChartGenerator();
+//		chartGenerator.generate(OUTPUT_FOLDER);
 	}
 }

@@ -13,6 +13,10 @@ public class ExecutionTime {
 		this.tempoExecucao = Long.valueOf(tempoExecucao);
 	}
 
+	public Long getTempoExecucao() {
+		return tempoExecucao;
+	}
+
 	@Override
 	public String toString() {
 		return idExecucao + " " + TimeUnit.MILLISECONDS.toHours(tempoExecucao);

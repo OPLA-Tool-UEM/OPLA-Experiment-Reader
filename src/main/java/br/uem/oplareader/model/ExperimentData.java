@@ -2,13 +2,17 @@ package br.uem.oplareader.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 public class ExperimentData {
 
 	private Integer qtdSolucoes;
 	private Integer qtdFuncoesObjetivo;
 	private List<Metric> metricas = new LinkedList<>();
-	private List<ExecutionTime> temposExecucao = new LinkedList<>();
+	private ExecutionTime tempoExecucao;
+	private double[][] front;
+	private Double hypervolume;
 
 	public ExperimentData(Integer qtdSolucoes, Integer qtdFuncoesObjetivo) {
 		this.qtdSolucoes = qtdSolucoes;
@@ -19,9 +23,14 @@ public class ExperimentData {
 		return metricas;
 	}
 
-	public List<ExecutionTime> getTemposExecucao() {
-		return temposExecucao;
+	public ExecutionTime getTemposExecucao() {
+		return tempoExecucao;
 	}
+	
+	public Long getTemposExecucaoEmHoras() {
+		return TimeUnit.MILLISECONDS.toHours(tempoExecucao.getTempoExecucao());
+	}
+
 
 	public Integer getQtdSolucoes() {
 		return qtdSolucoes;
@@ -30,15 +39,37 @@ public class ExperimentData {
 	public Integer getQtdFuncoesObjetivo() {
 		return qtdFuncoesObjetivo;
 	}
+	
+	public double[][] getFrontValue() {
+		return front;
+	}
+	
+	public Double getHypervolume() {
+		return hypervolume;
+	}
+	
+	public void setFrontValue(double[][] value) {
+		this.front = value;
+	}
+	
+	public void setHypervolume(Double hypervolume) {
+		this.hypervolume = hypervolume;
+	}	
 
 	public void add(List<String> nomeMetricas, List<String> valores) {
-		for (int index = 0; index < nomeMetricas.size(); index++) {
-			metricas.add(new Metric(nomeMetricas.get(index), valores.get(index)));
-		}
+		IntStream.range(0, valores.size()).forEach(index -> {
+			metricas.add(new Metric(String.valueOf(index), valores.get(index)));
+		});
 	}
 
-	public void add(ExecutionTime executionTime) {
-		this.temposExecucao.add(executionTime);
+	public void put(ExecutionTime executionTime) {
+		this.tempoExecucao =  executionTime;
 	}
 
+	@Override
+	public String toString() {
+		return "QTD Funções: " + qtdFuncoesObjetivo + ", QTD soluções: " + qtdSolucoes;
+	}
+
+	
 }

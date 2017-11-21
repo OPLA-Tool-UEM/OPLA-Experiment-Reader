@@ -34,15 +34,15 @@ public class ChartGenerator extends AbstractFileReader {
 	public void generate(Path outputFolder) throws IOException {
 		LOG.info("Gerando gráfico");
 
-		ExperimentData data = readData(outputFolder);
-		
-		new Thread(() -> {
-			createChart(data);
-		}).start();
-		
-		new Thread(() -> {
-			createXyChart(data);
-		}).start();
+//		ExperimentData data = readData(outputFolder);
+//		
+//		new Thread(() -> {
+//			createChart(data);
+//		}).start();
+//		
+//		new Thread(() -> {
+//			createXyChart(data);
+//		}).start();
 
 	}
 
